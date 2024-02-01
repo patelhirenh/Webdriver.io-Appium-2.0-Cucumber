@@ -70,7 +70,7 @@ Project Root
       Download from [here](https://github.com/appium/appium-inspector/releases)
 
 ## Installation
-    Clone the project:
+Clone the project:
 ```bash
     git clone https://github.com/patelhirenh/dailyMail.git
 ```
@@ -96,10 +96,10 @@ Project Root
 ```
 > Create a `.env` file in the root with your BrowserStack credentials:
   `BROWSERSTACK_USER=<YourUserName>`
-  `BROWSERSTACK_KEY=<YourAccessKey>``
+  `BROWSERSTACK_KEY=<YourAccessKey>`
 
 ## Reporting
-    The framework utilizes the `allure-report`` to display test successes and failures. To generate the report, execute the following command in the terminal:
+The framework utilizes the `allure-report`` to display test successes and failures. To generate the report, execute the following command in the terminal:
 ```bash
     allure generate allure-results && allure open
 ```
