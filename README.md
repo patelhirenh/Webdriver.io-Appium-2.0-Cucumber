@@ -1,111 +1,105 @@
-**WebdriverIO V8, Appium 2.0 & BDD Style framework using Typescript and Cucumber**
+# DailyMail Technical Task
 
-# This Framework is based on:
-WebdriverIO: 8.x
-Appium: 2.x
+## Framework Overview
 
-# About the framework
-- **BDD Style framework.**
-- **Page object model.**
-- **Feature files** include scenarios. Relative path for the feature files: **test/features/android-features**.
-- **Page objects** include the pages with are navigated and locators for elements are defined in each pageObject file for the respective page. Relative path: **test/pageobjects/androidPage**.
-- **Step-definitions** include the code implementation for the steps defined in scenarios in the feature file. Relative path: **test/step-definitions/mobile**.
-- **Utils** include the reusable functions which are created to eliminate duplication/reduction of code and maintain reusability of code throughout the framework. Relative path: **test/utils/android.utils.ts**.
-- **Package.json** includes the dependencies installed to build and run tests - This is in the root folder.
-- **Tsconfig.json** includes the compiler options and other necessary logic compile typescript.
-- **Wdio.android.conf.js** includes 
-    - Configuration of tests to run on local
-    - Port where the test will run
-    - Path of feature files
-    - Path of Setp definition
-    - Capabilities defined to run the test on Android Emulator
-    - Appium service
-    - Cucumber options where you can customise your cucumber tests
-    - Reports used to provide information of test runs
-- **Wdio.browserstack.conf.js** includes
-    - Browserstack credentials
-    - Configuration of tests to run on browserstack
-    - Path of feature files
-    - Path of Setp definition
-    - Capabilities defined to run the test on Browserstack
-    - Browserstack service
-    - Cucumber options where you can customise your cucumber tests 
-- **.gitignore** includes the changes in files which you do not want git to recognise as changes and by mentioning this in .gitignore will be ignored by git
+This framework leverages WebdriverIO version 8.x and Appium version 2.x, implementing a Behavior-Driven Development (BDD) style using TypeScript. 
+Following is the folder structure for the framework.
+```bash
+Project Root
+├── allure-report               # Directory for Allure report files
+├── allure-results              # Directory to store Allure test results
+├── app/                        # Directory containing the Android application (.apk file)
+├── node_modules                # Directory for Node.js modules and dependencies
+├── test/
+│   ├── features/
+│   │   ├── android-features    # Directory for Android-specific feature files
+│   │   └── web-features        # Directory for Web-specific feature files
+│   ├── pageobjects/
+│   │   ├── androidPage/        # Directory for Android page objects
+│   │   └── webPage/            # Directory for Web page objects
+│   ├── step-definations/
+│   │   ├── mobile/             # Directory for step definitions related to the mobile app
+│   │   └── web/                # Directory for step definitions related to the web app
+│   └── utils/                  # Directory for utility functions common to both Android and Web
+├── .gitignore                  # File specifying which files and directories to ignore in version control
+├── package-lock.json           # File automatically generated for npm dependencies
+├── README.md                   # Project documentation file in Markdown format
+├── tsconfig.json               # TypeScript configuration file
+├── tunnel.log                  # Log file for tunnel-related information
+├── wdio.android.conf.ts        # Configuration file for WebDriverIO related to Android
+├── wdio.browserstack.conf.ts   # Configuration file for WebDriverIO related to BrowserStack
+└── wdio.web.conf.ts            # Configuration file for WebDriverIO related to Web
+```
 
-# Installation
-Clone this project by running
-git clone https://github.com/desaikeyur7/daily-mail
+## Prerequisites
+1. Node.js and npm
+    * Install Node.js and npm from [nodejs.org](https://nodejs.org/en)
+    * Verify the installation using:
+```bash
+    node -v
+    npm -v
+```
+2. IDE (Integrated Development Environment)
+    * Choose an IDE such as Visual Studio Code, Atom, or Sublime Text.
+3. Java Development Kit (JDK)
+    * Install JDK from Oracle JDK[Oracle JDK](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://adoptium.net/en-GB/).
+    * Set the JAVA HOME [environment variables](https://mkyong.com/java/how-to-set-java_home-environment-variable-on-mac-os-x/).
+4. Appium
+    * Install Appium using npm:
+```bash
+    npm install -g appium
+```
+* Install Appium Doctor to check for Appium dependencies:
+```bash
+    npm install -g appium-doctor
+```
+    Run Appium Doctor:
+```bash
+    appium-doctor
+```
+5.  Android Studio (for Android Testing):
+    * Install Android Studio from [developer.android.com](https://developer.android.com/studio)
+    * Set Android environment variables in your shell configuration file (e.g., .bashrc, .zshrc):
+```bash
+    export ANDROID_HOME=/path/to/Android/sdk
+    export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+``` 
+6. Setup Android Emulator:
+      Configure the emulator through the Android Studio.
+7. Install Appium Inspector:
+      Download from [here](https://github.com/appium/appium-inspector/releases)
 
-## Install all dependencies
-- npm install
+## Installation
+    Clone the project:
+```bash
+    git clone https://github.com/patelhirenh/dailyMail.git
+```
 
-## Setup Android from scratch including JDK
-- Java JDK Setup
-  https://mkyong.com/java/how-to-set-java_home-environment-variable-on-mac-os-x/
-  
-## Android Studio Setup
-  https://developer.android.com/studio
-  
-## Android Environment Variables setup
-  Open the Environment Variable file: **vim ~/.zshenv**
-  
-  **Add Android environment variables:**
-  
-  export ANDROID_HOME=/Users/<yourMacbookUserName>/Library/Android/sdk/
-  
-  export ANDROID_SDK_ROOT=/Users/<yourMacbookUserName>/Library/Android/sdk
-  
-  export PATH=$PATH:$ANDROID_HOME/platform-tools:$PATH
-  
-  export PATH=$PATH:$ANDROID_HOME/tools:$PATH
-  
-  export PATH=$ANDROID_HOME/build-tools/34.0.0:$PATH
-  
-  export PATH=$ANDROID_HOME/build-tools/34.0.0/bin:$PATH
-  
-  **Source the changes:**
-  source ~/.zshenv
-  
-  **Test changes:**
-  echo $ANDROID_HOME
-  adb devices - should return list of devices attached.
-  
- **Note:** the same changes can be added to .zshrc or .bashprofile file as well.
+## Install dependencies:
+```bash
+    npm install
+```
 
-## Setup Android Emulator
-  This has to be setup via Configure option in Android studio.
+## Running Mobile test locally
+```bash
+    npm run wdio-android
+```
 
-## Install Appium Inspector
-  https://github.com/appium/appium-inspector/releases.
+## Running Web test locally
+```bash
+    npm run wdio-web
+```
 
-## Install Appium
-  https://www.npmjs.com/package/appium.
+## Running Tests on BrowserStack
+```bash
+    npm run wdio-browserstack
+```
+> Create a `.env` file in the root with your BrowserStack credentials:
+  `BROWSERSTACK_USER=<YourUserName>`
+  `BROWSERSTACK_KEY=<YourAccessKey>``
 
-## Install Appium drivers
-  appium driver install uiautomator2
-  To verify if its been installed, you can run **- appium driver list**
-
-  
-# Run tests in local
-  npm run wdio-android
-
-  **Note:** The tests run locally on port 4723.
-
-
-# Run tests on browserstack
-  npm run wdio-browserstack
-
-  **Note:** You will require to create a **.env** file in root add your browserstack credentials as shown below in the .env file:
-  BROWSERSTACK_USER=<YourUserName>
-  BROWSERSTACK_KEY=<YourAccessKey>
-
-
-# Locator strategy
-I have used Xpath as there are no accessibility id's available for any element during the creation of the tests. 
-
-
-# Reporting 
-I have used **allure-report** as it helps to visualise the success and failures of tests in a convenient manner. Command to generate the report:
-**allure generate allure-results && allure open**
-
-
+## Reporting
+    The framework utilizes the `allure-report`` to display test successes and failures. To generate the report, execute the following command in the terminal:
+```bash
+    allure generate allure-results && allure open
+```
