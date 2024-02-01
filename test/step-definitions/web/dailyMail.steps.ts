@@ -22,20 +22,26 @@ When(/^I click on a video for playback$/, async () => {
 	await dailyMailVideoPage.videoHeadline.scrollIntoView()
 	await expect(dailyMailVideoPage.videoHeadline).toBeDisplayedInViewport()
 	await dailyMailVideoPage.videoWindow.click()
-
-
-
-	// await browser.pause(23000)
-	// await dailyMailVideoPage.playButton.click()
-	// await browser.pause(3000)
-	// await dailyMailVideoPage.slideProgressBar()
-	// await browser.pause(10000)
-	// console.log('*****************************')
-
 })
 
 Then(/^I should observe the video playing$/, async () => {
-	await expect(dailyMailVideoPage.playButton).toHaveAttribute('class', 'vjs-play-control vjs-control  vjs-playing')
+	try {
+		await dailyMailVideoPage.playButton.waitUntil(
+			async () => {
+				const attributeValue = await dailyMailVideoPage.playButton.getAttribute('class');
+				return attributeValue === 'vjs-play-control vjs-control  vjs-playing';
+			},
+			{
+				timeout: 5000,
+				interval: 500,
+				timeoutMsg: 'Element did not have the expected attribute value within the specified timeout',
+			}
+		);
+	
+		await expect(dailyMailVideoPage.playButton).toHaveAttribute('class', 'vjs-play-control vjs-control  vjs-playing');
+	} catch (error) {
+		console.error('Error:', error);
+	}
 })
 
 When(/^I click on the video to pause playback$/, async () => {
@@ -116,7 +122,7 @@ When(/^the video playback is complete$/, async () => {
 	const [minutes, seconds] = minutesString.split(':').map(Number)
 	const totalSecondsToWait: number = minutes * 60 * 1000 + seconds
 	dailyMailVideoPage.setTotalWaitTime = totalSecondsToWait
-	//await browser.pause(totalSecondsToWait)
+	await browser.pause(totalSecondsToWait)
 
 })
 

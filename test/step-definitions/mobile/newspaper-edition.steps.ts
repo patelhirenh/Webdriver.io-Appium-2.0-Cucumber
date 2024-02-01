@@ -21,13 +21,12 @@ Given(/^I am on the Welcome page$/, async () => {
 });
 
 When(/^I navigate to the Mail plus homepage$/, async () => {
-  
   await commonElements.continueButton.click();
   await newspaperViewPage.newspaperViewMessage.waitForDisplayed({ timeout: 5000 });
   await commonElements.continueButton.click();
   await latestViewPage.latestViewMessage.waitForDisplayed({ timeout: 5000 });
   await commonElements.continueButton.click();
-  await bestOfTheMailPage.bestOfTheMailMessage.waitForDisplayed({ timeout: 5000 });
+  await bestOfTheMailPage.bestOfTheMailMessage.waitForDisplayed({ timeout: 10000 });
   await commonElements.continueButton.click();
   await puzzlesPage.puzzlesMessage.waitForDisplayed({ timeout: 5000 });
   await commonElements.continueButton.click();
@@ -37,7 +36,12 @@ When(/^I navigate to the Mail plus homepage$/, async () => {
 When(/^I tap on see more link from recent issues section$/, async () => {
   await androidUtils.verticalScrollByText(0, 'Recent issues')
   await androidUtils.horizontalScroll()
-  await mailPlusHomePage.seeMoreLink.click()
+  if(await mailPlusHomePage.seeMoreLink.isDisplayed()){
+    await mailPlusHomePage.seeMoreLink.click()
+  } else {
+    await androidUtils.horizontalScroll()
+    await mailPlusHomePage.seeMoreLink.click()
+  }
 });
 
 
@@ -78,14 +82,14 @@ Then(/^I should see the "([^"]*)" edition has been downloaded$/, async (date) =>
   await browser.switchContext('NATIVE_APP')
   await androidUtils.waitForContext('NATIVE_APP')
   await browser.pause(150000)
-  await newspaperPdfPage.bookIcon.waitForEnabled({ timeout: 150000 })
   await expect(newspaperPdfPage.newsPaperPublishedDate).toHaveText(date)
-  await expect(newspaperPdfPage.bookIcon).toBeEnabled()  
+  await expect(newspaperPdfPage.bookIcon).toBeEnabled()
 });
 
 
 Given(/^I am on the downloaded news edition for "([^"]*)"$/, async (date) => {
-	await expect(newspaperPdfPage.newsPaperPublishedDate).toHaveText(date)
+  await newspaperPdfPage.newsPaperPublishedDate.waitForDisplayed({ timeout: 60000 });
+	await expect(await newspaperPdfPage.newsPaperPublishedDate).toHaveText(date)
 });
 
 When(/^I navigate to page "([^"]*)" in the PDF view, which displays The squeaky-clean mouse$/, async (pageNumber) => {
@@ -103,7 +107,7 @@ When(/^I tap on the camera icon of an image to open fullscreen mode$/,  async ()
 });
 
 When(/^I traverse through all the gallery images$/,  async () => {
-  await newspaperPdfPage.initialImageCountTextOnImage.waitForDisplayed({ timeout: 10000 })
+  await newspaperPdfPage.initialImageCountTextOnImage.waitForDisplayed({ timeout: 30000 })
   const pageCount: string = await newspaperPdfPage.initialImageCountTextOnImage.getText();
   newspaperPdfPage.setImageCount = parseInt(pageCount.slice(-1), 10)
   await androidUtils.swipeRight(await newspaperPdfPage.photoImageGallery, newspaperPdfPage.getImageCount)

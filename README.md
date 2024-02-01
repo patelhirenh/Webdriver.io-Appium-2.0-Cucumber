@@ -99,7 +99,7 @@ Clone the project:
   `BROWSERSTACK_KEY=<YourAccessKey>`
 
 ## Reporting
-The framework utilizes the `allure-report`` to display test successes and failures. To generate the report, execute the following command in the terminal:
+The framework utilizes the `allure-report` to display test successes and failures. To generate the report, execute the following command in the terminal:
 ```bash
-    allure generate allure-results && allure open
+    allure generate --clean allure-results && allure open
 ```

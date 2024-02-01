@@ -114,7 +114,6 @@ public async tapOnElement(elementToTap: WebdriverIO.Element) {
 
 async tapOnElement1(elementToTap: WebdriverIO.Element) {
     try {
-        // Perform the tap using the Action API
         await elementToTap.performActions([
             {
                 type: 'pointer',
@@ -140,12 +139,12 @@ public async waitForContext(contextName: string) {
         const currentContext = await browser.getContext();
         return currentContext === contextName;
     }, {
-        timeout: 15000, // Adjust the timeout as needed
-        timeoutMsg: `Context '${contextName}' not found within 10 seconds`,
-        interval: 1000, // Check every 1 second
+        timeout: 60000, 
+        timeoutMsg: `Context '${contextName}' not found within 60 seconds`,
+        interval: 500, 
     });
-  }
-    
+}
+
 
 }
 

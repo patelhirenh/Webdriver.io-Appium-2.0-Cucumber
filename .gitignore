@@ -7,7 +7,7 @@ package-lock.json
 logs
 allure-results
 allure-report
-
+your-result-folder
 #environment variables stored in .env
 .env
 
