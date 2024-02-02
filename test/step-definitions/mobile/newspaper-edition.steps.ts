@@ -102,8 +102,8 @@ When(/^I tap on the gallery icon to go to the ALB page$/,  async () => {
 
 When(/^I tap on the camera icon of an image to open fullscreen mode$/,  async () => {
   await newspaperPdfPage.cameraIconOnImage.waitForDisplayed({ timeout: 10000 })
+  await browser.pause(5000)
 	await newspaperPdfPage.cameraIconOnImage.click()
-  await androidUtils.tapOnElement(await newspaperPdfPage.cameraIconOnImage)
 });
 
 When(/^I traverse through all the gallery images$/,  async () => {
