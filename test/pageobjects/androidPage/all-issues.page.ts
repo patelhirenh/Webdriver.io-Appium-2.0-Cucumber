@@ -1,9 +1,9 @@
-import Page from "../page";
+import Page from "../page"
 
 class AllIssuesPage extends Page {
 
     public get archiveTab() {
-        return $('//android.widget.TextView[@text="Archive"]');
+        return $('//android.widget.TextView[@text="Archive"]')
     }
 
     public get allIssuesGetText() {

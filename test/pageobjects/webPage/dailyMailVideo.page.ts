@@ -1,4 +1,4 @@
-import Page from "../page";
+import Page from "../page"
 
 class DailyMailVideo extends Page {
     
@@ -37,7 +37,7 @@ class DailyMailVideo extends Page {
     }
 
     set setValue(value: string) {
-        this.videoDescription = value;
+        this.videoDescription = value
     }
 
     public get videoHeadline() {
@@ -50,7 +50,7 @@ class DailyMailVideo extends Page {
     }
 
     set setDurationTime(value: string) {
-        this.videoPlayTime = value;
+        this.videoPlayTime = value
     }
 
     public get videoDurationTimeGetText() {
@@ -66,13 +66,13 @@ class DailyMailVideo extends Page {
     }
     
 public async slideProgressBar() {
-    const origin = await this.videoSliderHandle;
-    const targetOrigin = await this.videoProgressBar;
+    const origin = await this.videoSliderHandle
+    const targetOrigin = await this.videoProgressBar
 
     if (origin && targetOrigin) {
-        const originSize = await targetOrigin.getSize();
-        const targetX = Math.round(originSize.width * 0.9);
-        const targetY = Math.round(originSize.height * 0.9);
+        const originSize = await targetOrigin.getSize()
+        const targetX = Math.round(originSize.width * 0.9)
+        const targetY = Math.round(originSize.height * 0.9)
 
         await browser.action('pointer')
             .move({ duration: 0, origin, x: 0, y: 0 })
@@ -80,21 +80,21 @@ public async slideProgressBar() {
             .pause(10)
             .move({ duration: 0, origin: targetOrigin, x: targetX, y: targetY })
             .up({ button: 0 })
-            .perform();
+            .perform()
     } else {
-        console.error("Source or target element not found");
+        console.error("Source or target element not found")
     }
 }
 
-private totalWaitTime: number = 0;
+private totalWaitTime: number = 0
     get getTotalWaitTime(): number {
-        return this.totalWaitTime;
+        return this.totalWaitTime
     }
     set setTotalWaitTime(value: number) {
         if (value >= 0) {
-            this.totalWaitTime = value;
+            this.totalWaitTime = value
         } else {
-            console.error("Total wait time must be a non-negative number.");
+            console.error("Total wait time must be a non-negative number.")
         }
     }
 

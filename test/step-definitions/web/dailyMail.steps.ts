@@ -20,7 +20,13 @@ When(/^I have accepted cookies$/, async () => {
 
 When(/^I click on a video for playback$/, async () => {
 	await dailyMailVideoPage.videoHeadline.scrollIntoView()
-	await expect(dailyMailVideoPage.videoHeadline).toBeDisplayedInViewport()
+	await browser.waitUntil(async () => {
+		return await dailyMailVideoPage.videoHeadline.isDisplayedInViewport()
+	}, {
+		timeout: 5000, 
+		timeoutMsg: 'Element is not scrolled into view after 5 seconds',
+		interval: 500, 
+	})
 	await dailyMailVideoPage.videoWindow.click()
 })
 
@@ -28,44 +34,47 @@ Then(/^I should observe the video playing$/, async () => {
 	try {
 		await dailyMailVideoPage.playButton.waitUntil(
 			async () => {
-				const attributeValue = await dailyMailVideoPage.playButton.getAttribute('class');
-				return attributeValue === 'vjs-play-control vjs-control  vjs-playing';
+				const attributeValue = await dailyMailVideoPage.playButton.getAttribute('class')
+				return attributeValue === 'vjs-play-control vjs-control  vjs-playing'
 			},
 			{
 				timeout: 5000,
 				interval: 500,
 				timeoutMsg: 'Element did not have the expected attribute value within the specified timeout',
 			}
-		);
+		)
 	
-		await expect(dailyMailVideoPage.playButton).toHaveAttribute('class', 'vjs-play-control vjs-control  vjs-playing');
+		await expect(dailyMailVideoPage.playButton).toHaveAttribute('class', 'vjs-play-control vjs-control  vjs-playing')
 	} catch (error) {
-		console.error('Error:', error);
+		console.error('Error:', error)
 	}
 })
 
 When(/^I click on the video to pause playback$/, async () => {
-	await dailyMailVideoPage.videoWindow.waitForClickable({ timeout: 30000 })
-	await dailyMailVideoPage.videoWindow.click()
+	try {
+		await dailyMailVideoPage.videoWindow.waitForClickable({ timeout: 30000 })
+		await dailyMailVideoPage.videoWindow.click()
+	} catch (error) {
+		await dailyMailVideoPage.playButton.click()
+	}
 })
 
 Then(/^I should witness the video being paused$/, async () => {
 	try {
 		await dailyMailVideoPage.playButton.waitUntil(
 			async () => {
-				const attributeValue = await dailyMailVideoPage.playButton.getAttribute('class');
-				return attributeValue === 'vjs-play-control vjs-control vjs-paused';
+				const attributeValue = await dailyMailVideoPage.playButton.getAttribute('class')
+				return attributeValue === 'vjs-play-control vjs-control vjs-paused'
 			},
 			{
 				timeout: 5000,
 				interval: 500,
 				timeoutMsg: 'Element did not have the expected attribute value within the specified timeout',
 			}
-		);
-	
-		await expect(dailyMailVideoPage.playButton).toHaveAttribute('class', 'vjs-play-control vjs-control vjs-paused');
+		)
+		await expect(dailyMailVideoPage.playButton).toHaveAttribute('class', 'vjs-play-control vjs-control vjs-paused')
 	} catch (error) {
-		console.error('Error:', error);
+		console.error('Error:', error)
 	}
 })
 

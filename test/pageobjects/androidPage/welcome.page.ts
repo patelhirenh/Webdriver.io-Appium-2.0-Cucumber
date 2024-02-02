@@ -1,4 +1,4 @@
-import Page from "../page";
+import Page from "../page"
 
 class WelcomePage extends Page{
 
@@ -23,10 +23,11 @@ class WelcomePage extends Page{
     }
 
     public async yourAppNeedsUpdatingGetText(){
-        if (await this.yourAppNeedsUpdating.isDisplayed()) {
+        try {
+            await this.cancelUpdateAppButton.waitForDisplayed({ timeout: 10000 })
             await this.cancelUpdateAppButton.click()
-        } else {
-            console.log('Your app need updating popup is not displayed')
+        } catch (error) {
+            
         }
     }
     

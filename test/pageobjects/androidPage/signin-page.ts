@@ -7,15 +7,15 @@ class SignInPage extends Page {
     }
 
     public get signInButton() {
-        return $('//button');
+        return $('//button')
     }
 
     public get emailAddress() {
-        return $('//input[@name="email"]');
+        return $('//input[@name="email"]')
     }
 
     public get password() {
-        return $('//input[@name="password"]');
+        return $('//input[@name="password"]')
     }
 
 }
