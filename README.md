@@ -1,4 +1,4 @@
-# DailyMail Technical Task
+# Web & Mobile Automation using Webdriver.io, Appium 2.0 & Typescript
 
 ## Framework Overview
 
